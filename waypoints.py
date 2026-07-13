@@ -225,9 +225,8 @@ def write_waypoints(work: str, trip_meta: dict):
                 json.dumps({"features": [feature], "type": "FeatureCollection"},
                            ensure_ascii=False, separators=(",", ":"))))
         written += 1
-    logging.info(
-        f"wrote {written} waypoint files; {
-            len(unmatched)} route-directions unmatched by pfaedle")
+    n_missing = len(unmatched)
+    logging.info(f"wrote {written} waypoint files; {n_missing} unmatched")
     if unmatched:
         logging.warning("unmatched: " +
                         ", ".join(unmatched[:60]) +
