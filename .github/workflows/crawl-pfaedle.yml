@@ -1,9 +1,12 @@
 name: Data Fetching (pfaedle / OSM map-match, RFC)
 
-# Manual-only for now: runs the pfaedle-based generator and uploads the result as an
-# artifact for inspection. Does NOT deploy to gh-pages, so it never touches live data.
+# Runs the pfaedle-based generator and uploads the result as an artifact for inspection.
+# Does NOT deploy to gh-pages, so it never touches live data. Manual trigger + this RFC
+# branch (the branch trigger is here so reviewers can see it go green; drop it before merge).
 on:
   workflow_dispatch:
+  push:
+    branches: [pfaedle-waypoints]
 
 jobs:
   Fetch-Route-Data-pfaedle:
