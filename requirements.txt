@@ -1,3 +1,16 @@
-# No Python dependencies: waypoints.py uses only the standard library.
-# The geometry work is done by pfaedle, which runs from its official Docker image
-# (ghcr.io/ad-freiburg/pfaedle) — Docker is preinstalled on GitHub's ubuntu runners.
+certifi==2024.12.14
+charset-normalizer==3.4.1
+geopandas==1.0.1
+idna==3.10
+numpy==2.2.1
+packaging==24.2
+pandas==2.2.3
+pyogrio==0.10.0
+pyproj==3.7.0
+python-dateutil==2.9.0.post0
+pytz==2024.2
+requests==2.32.3
+shapely==2.0.6
+six==1.17.0
+tzdata==2024.2
+urllib3==2.3.0
