@@ -33,6 +33,23 @@ To fetch data, run the followings,
 python ./waypoints.py
 ```
 
+## Experimental: waypoints from OpenStreetMap map-matching (`waypoints_pfaedle.py`)
+
+The CSDI line is **not GPS-observed** — it is itself routed between stops, so it inherits a
+router's mistakes: spurious multi-km loops at some termini and long detours where a turn was
+skipped. `waypoints_pfaedle.py` instead **re-derives** each shape from the official GTFS stop
+sequence by map-matching to OpenStreetMap with [`pfaedle`](https://github.com/ad-freiburg/pfaedle),
+and writes the **same** `{ROUTE_ID}-{O|I}.json` format. It fixes every defect class at once and,
+on a spot-check, lands within ~1% of the operators' own published route lines.
+
+```
+python waypoints_pfaedle.py          # needs Docker (pfaedle runs from the official image)
+```
+
+Runs the whole franchised-bus network in about a minute (OSM graph load + map-match). This is an
+RFC — the manual `Data Fetching (pfaedle …)` workflow uploads the output as an artifact and does
+**not** deploy to `gh-pages`. See the pull request for the evidence.
+
 ## Citing 
 
 Please kindly state you are using this app as
