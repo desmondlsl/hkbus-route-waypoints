@@ -171,7 +171,9 @@ def main():
         shutil.rmtree("waypoints")
     os.makedirs("waypoints", exist_ok=True)
 
-    with TemporaryDirectory() as work:
+    # ignore_cleanup_errors: pfaedle runs in Docker as root and writes out/ as root, which a
+    # non-root CI runner can't delete on teardown. The output files we need are already written.
+    with TemporaryDirectory(ignore_cleanup_errors=True) as work:
         fetch(OSM_URL, f"{work}/hong-kong.osm.pbf")
         fetch(GTFS_URL, f"{work}/gtfs.zip")
         with zipfile.ZipFile(f"{work}/gtfs.zip") as z:
