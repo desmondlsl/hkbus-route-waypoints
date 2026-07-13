@@ -110,7 +110,9 @@ def run_pfaedle(work: str):
     if cmd:
         args = cmd.split() + ["-x", f"{work}/hong-kong.osm.pbf", "-o", f"{work}/out", f"{work}/gtfs"]
     else:
-        args = ["docker", "run", "--rm", "-v", f"{work}:/data", PFAEDLE_IMAGE,
+        # write output as the host user so a non-root CI runner can clean up the temp dir
+        run_as = ["--user", f"{os.getuid()}:{os.getgid()}"] if hasattr(os, "getuid") else []
+        args = ["docker", "run", "--rm", *run_as, "-v", f"{work}:/data", PFAEDLE_IMAGE,
                 "-x", "/data/hong-kong.osm.pbf", "-o", "/data/out", "/data/gtfs"]
     logging.info("running pfaedle: " + " ".join(args))
     subprocess.run(args, check=True)
