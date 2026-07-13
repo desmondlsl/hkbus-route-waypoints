@@ -17,12 +17,8 @@ jobs:
         with:
             python-version: '3.12'
             architecture: 'x64'
-      - name: Install pfaedle (native, no Docker on CI)
-        run: sudo apt-get update && sudo apt-get install -y pfaedle
       - name: Crawling resources
-        run: python waypoints.py
-        env:
-          PFAEDLE_CMD: pfaedle
+        run: python waypoints.py   # pfaedle runs from its official Docker image (preinstalled on the runner)
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
