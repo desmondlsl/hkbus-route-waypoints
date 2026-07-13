@@ -17,12 +17,12 @@ jobs:
         with:
             python-version: '3.12'
             architecture: 'x64'
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r ./requirements.txt
+      - name: Install pfaedle (native, no Docker on CI)
+        run: sudo apt-get update && sudo apt-get install -y pfaedle
       - name: Crawling resources
         run: python waypoints.py
+        env:
+          PFAEDLE_CMD: pfaedle
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
