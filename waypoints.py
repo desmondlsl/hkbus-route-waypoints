@@ -87,7 +87,7 @@ def fetch_route_directions():
                         v["orig"]["en"], v["dest"]["en"])
         logging.info(
             f"Fetched directions for {
-                len(directions)} (co, route) pairs")
+                len(directions)}(co, route) pairs")
     except Exception as e:
         logging.warning(
             f"routeFareList fetch failed; using ROUTE_SEQ fallback: {e}")
