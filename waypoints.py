@@ -95,12 +95,15 @@ def fetch_direction_index():
                 stops_co = v.get("stops", {}).get(co)
                 loc = stop_list.get(stops_co[0], {}).get(
                     "location") if stops_co else None
-                if bound and loc:
+                # only plain O/I; skip circular "OI"/"IO", tram "DT"/"UT",
+                # cross-boundary "LMC-*"/"TKS-*" -> those fall back to
+                # ROUTE_SEQ
+                if bound in ("O", "I") and loc:
                     index[(gtfs_id, co)].append(
                         (bound, loc["lat"], loc["lng"]))
         logging.info(
             f"Fetched direction index for {
-                len(index)}(route, co) pairs")
+                len(index)} (route, co) pairs")
     except Exception as e:
         logging.warning(
             f"routeFareList fetch failed; O/I falls back to ROUTE_SEQ: {e}")
