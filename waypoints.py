@@ -75,12 +75,15 @@ def fetch_direction_index():
 def _resolve(feature, direction_index):
     """O/I for one feature by the direction whose first stop is nearest its line
     start, or None if unavailable / farther than the guard distance."""
+    # geopandas yields coords as (possibly nested) tuples, 2D or 3D; descend to
+    # the first point [lon, lat, ...] of the first line
     coords = (feature.get("geometry") or {}).get("coordinates") or []
-    while coords and isinstance(coords[0][0], list):  # MultiLineString -> line
+    while (coords and isinstance(coords[0], (list, tuple))
+           and isinstance(coords[0][0], (list, tuple))):
         coords = coords[0]
-    if not coords:
+    if not coords or not isinstance(coords[0], (list, tuple)):
         return None
-    lon, lat = coords[0][0], coords[0][1]  # coords may be 3D (lon, lat, z)
+    lon, lat = coords[0][0], coords[0][1]
     p = feature["properties"]
     cos = [_CO_ALIAS.get(c, c.lower())
            for c in str(p.get("COMPANY_CODE", "")).split("+")]
