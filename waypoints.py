@@ -60,7 +60,7 @@ def fetch_direction_index():
         rfl = requests.get(ROUTE_FARE_LIST_URL, timeout=120).json()
         stops = rfl["stopList"]
         for v in rfl["routeList"].values():
-            for co in v.get("co", []):
+            for co in v.get("co", [])[:1]:
                 bound = v.get("bound", {}).get(co)
                 seq = v.get("stops", {}).get(co)
                 loc = stops.get(seq[0], {}).get("location") if seq else None
